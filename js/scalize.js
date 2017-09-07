@@ -129,30 +129,28 @@
             var width = image.naturalWidth,
                 height = image.naturalHeight,
                 getWidthLess = $(elem).width(),
+                getHeightLess = $(elem).height(),                
                 setPersenWidth = getWidthLess/width * 100,
-                setHeight = height * setPersenWidth / 100;
+                setHeight = height * setPersenWidth / 100,
+                widthRate = getWidthLess / width,
+                heightRate = getHeightLess / height;
 
             // Set Heigh Element
             $(elem).css("height", setHeight);
 
             // Resize Width
-            if( $(window).width() < width ){
-                $(elem).stop().css("width","100%");
-            }else{
-                $(elem).stop().css("width",width);
-            }
+             $(elem).stop().css("width","100%");
 
             // Set Position Selector
             $(this.settings.selector).each(function(){
-                if( $(window).width() < width ){
-                    var getTop = $(this).data("top") * setPersenWidth / 100,
-                        getLeft = $(this).data("left") * setPersenWidth / 100;
-                }else{
-                    var getTop = $(this).data("top"),
-                        getLeft = $(this).data("left");
-                }
+                 
+             
+                    var getTop = $(this).data("top") * heightRate ,
+                        getLeft = $(this).data("left") * widthRate ;
+                           
                 $(this).css("top", getTop + "px");
                 $(this).css("left", getLeft + "px");
+                
 
                 // Target Position
                 var target = $(this).data('popover'),
@@ -182,6 +180,10 @@
                     $('.toggle', this).css('width', widthThis);
                     $('.toggle', this).css('height', heightThis);                    
                 }
+                
+                 var color = $(this).data("color");
+                 console.log(color);
+                $(this).css("background-color", color);
             });
         }
         
